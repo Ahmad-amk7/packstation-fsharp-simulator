@@ -4,6 +4,8 @@ An ASP.NET Core MVC web application written in F# for a parcel locker workflow. 
 
 F# provides concise, strongly typed domain and application code while running on the .NET platform and integrating with ASP.NET Core, MySQL, MailKit, and SSH.NET. The project is a prototype: several screens currently check that a user is signed in but do not enforce role-specific authorization. Add and test authorization policies before deploying with real users or parcels.
 
+Password handling is not production-ready: registration currently stores the submitted password directly, and login compares that value without hashing or encryption. Do not use real accounts or passwords with this prototype. Before deployment, replace this with ASP.NET Core Identity's password hasher or another vetted adaptive password-hashing scheme, and migrate existing records. AES-GCM is reversible encryption, not password storage; a plain SHA hash is also insufficient.
+
 ## Requirements
 
 - .NET 10 SDK
@@ -96,6 +98,8 @@ Diese ASP.NET-Core-MVC-Webanwendung ist in F# geschrieben und bildet einen Paket
 
 F# bietet prägnanten, stark typisierten Code für Fachlogik und Anwendung und läuft zugleich auf .NET mit Zugriff auf ASP.NET Core, MySQL, MailKit und SSH.NET. Das Projekt ist ein Prototyp: Einige Seiten prüfen derzeit nur die Anmeldung und erzwingen keine rollenbezogene Autorisierung. Vor einem Einsatz mit echten Benutzern oder Paketen müssen Autorisierungsrichtlinien ergänzt und getestet werden.
 
+Die Passwortverarbeitung ist nicht produktionsreif: Bei der Registrierung wird das eingegebene Passwort derzeit direkt gespeichert und bei der Anmeldung ohne Hashing oder Verschlüsselung verglichen. Verwende mit diesem Prototyp keine echten Konten oder Passwörter. Vor dem Produktiveinsatz muss ein bewährtes, adaptives Passwort-Hashing eingesetzt und bestehende Datensätze migriert werden, zum Beispiel der Password-Hasher von ASP.NET Core Identity. AES-GCM ist umkehrbare Verschlüsselung und keine geeignete Passwortspeicherung; ein einfacher SHA-Hash ist ebenfalls unzureichend.
+
 ### Voraussetzungen und Start
 
 Benötigt werden das .NET-10-SDK, ein MySQL-Server und ein Datenbankkonto, das die konfigurierte Datenbank erstellen und verwenden darf. Zugangsdaten gehören nicht in eingecheckte Dateien. Setze sie lokal als Umgebungsvariablen, zum Beispiel `ConnectionStrings__Admin`, `EmailSettings__SmtpHost`, `EmailSettings__SmtpUser`, `EmailSettings__SmtpPassword` und `EmailSettings__FromAddress`, und starte anschließend `dotnet run`. Beim Start legt die Anwendung das Schema an. Die Werte in `appsettings.json` für Zugangsdaten sind absichtlich leer.
@@ -136,6 +140,8 @@ Verwende SSH-Schlüssel statt eines Pi-Passworts. Autorisiere den öffentlichen 
 هذا تطبيق ويب ببنية ASP.NET Core MVC ومكتوب بلغة F# لمحاكاة دورة عمل محطة الطرود. يتضمن واجهات للمرسل والمستلم والموظف والإدارة، وتتبع الشحنات ورموز الاستلام وسجلات المحطات والخانات، والتخزين باستخدام MySQL وإشعارات البريد الإلكتروني. ربط الراسبيري باي اختياري ولا يعمل قبل إعداد SSH بصورة آمنة.
 
 تقدم F# صياغة موجزة وأنواعاً قوية لتمثيل منطق المجال، مع الاستفادة من منصة .NET والتكامل مع ASP.NET Core وMySQL وMailKit وSSH.NET. المشروع نموذج أولي؛ بعض الصفحات تتحقق حالياً من تسجيل الدخول فقط ولا تفرض صلاحيات منفصلة حسب الدور. يجب إضافة سياسات التفويض واختبارها قبل استخدام التطبيق مع مستخدمين أو طرود حقيقية.
+
+التعامل مع كلمات المرور غير جاهز للإنتاج: التسجيل يحفظ كلمة المرور المُدخلة مباشرةً، وتتحقق عملية الدخول بمقارنتها دون تجزئة أو تشفير. لا تستخدم حسابات أو كلمات مرور حقيقية مع هذا النموذج الأولي. قبل النشر، استبدل ذلك بآلية تجزئة كلمات مرور تكيفية وموثوقة، مثل `PasswordHasher` في ASP.NET Core Identity، وانقل السجلات الحالية. تشفير AES-GCM قابل للعكس وليس مناسباً لتخزين كلمات المرور، كما أن تجزئة SHA العادية غير كافية.
 
 ### المتطلبات والتشغيل
 
