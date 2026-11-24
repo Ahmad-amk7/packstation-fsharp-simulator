@@ -1,0 +1,38 @@
+@{
+    ViewData["Title"] = "Packstation Startseite";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Packstation Simulator</h1>
+    <p class="lead">DHL Packstation ähhnlich - Pakete versenden und abholen</p>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">?? Paket versenden</h5>
+                <p class="card-text">Als Absender Paket erstellen und Daten des Empfängers eingeben</p>
+                <a asp-controller="Sender" asp-action="CreateParcel" class="btn btn-primary">Paket versenden</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">?????????????????????????? Paket verfolgen</h5>
+                <p class="card-text">Mit Trackingnummer den Status des Pakets verfolgen</p>
+                <a asp-controller="Recipient" asp-action="Track" class="btn btn-success">Verfolgen</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">??????????????? Fach öffnen</h5>
+                <p class="card-text">Mit 6-stelligem Abholcode das Fach öffnen</p>
+                <a asp-controller="Locker" asp-action="Open" class="btn btn-warning">Fach öffnen</a>
+            </div>
+        </div>
+    </div>
+</div>

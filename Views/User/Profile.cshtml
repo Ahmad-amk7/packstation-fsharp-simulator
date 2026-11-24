@@ -1,0 +1,42 @@
+﻿@model PackstationFsharp.Models.UserAccount
+@{
+    ViewData["Title"] = "Profil";
+}
+
+<h2>Mein Profil</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                @if (!string.IsNullOrEmpty(Model.ProfileImage))
+                {
+                    <img src="@Model.ProfileImage" alt="Profilbild" class="img-fluid rounded-circle mb-3" style="max-width: 150px;" />
+                }
+                else
+                {
+                    <div class="bg-secondary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 150px; height: 150px;">
+                        <span class="text-white" style="font-size: 3rem;">@Model.UserName?.Substring(0,1)</span>
+                    </div>
+                }
+                <h5>@Model.UserName</h5>
+                <p class="text-muted">@Model.UserEmail</p>
+                <p>Rolle: @Model.Role</p>
+                <p>Aktiviert: @(Model.IsActivated ? "Ja" : "Nein")</p>
+                <a asp-action="EditProfileImage" class="btn btn-sm btn-primary">Profilbild ändern</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5>Kontodaten</h5>
+                <p><strong>Telefon:</strong> @(Model.PhoneNumber ?? "-")</p>
+                <p><strong>Adresse:</strong> @(Model.AddressStreet ?? "") @(Model.AddressHouseNo ?? ""), @(Model.AddressCity ?? "") @(Model.AddressPostalCode ?? "") @(Model.AddressCountry ?? "")</p>
+                <a asp-action="Edit" class="btn btn-primary">Profil bearbeiten</a>
+                <a asp-action="Delete" class="btn btn-danger">Konto lÃ¶schen</a>
+            </div>
+        </div>
+    </div>
+</div>

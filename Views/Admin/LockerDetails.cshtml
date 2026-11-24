@@ -1,0 +1,63 @@
+﻿@model PackstationFsharp.Models.Locker
+@{
+    ViewData["Title"] = "Packstation Details";
+    var comps = ViewBag.Compartments as List<PackstationFsharp.Models.Compartment>;
+}
+
+<h2>@Model.LockerName</h2>
+<hr />
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <p><strong>Adresse:</strong> @Model.Address</p>
+                <p><strong>IP:</strong> @Model.IpAddress:@Model.Port</p>
+                <p><strong>API Key:</strong> <code>@Model.ApiKey</code></p>
+                <p><strong>Status:</strong> @Model.Status</p>
+                <p><strong>Simulation:</strong> @(Model.UseSimulation ? "Aktiviert" : "Deaktiviert")</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h4>FÃ¤cher verwalten</h4>
+<form asp-action="AddCompartments" method="post" class="row mb-3">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="lockerId" value="@Model.LockerId" />
+    <div class="col-md-2">
+        <input type="number" name="count" class="form-control" placeholder="Anzahl" min="1" max="20" required />
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary">Fächer hinzufügen</button>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Fachnummer</th>
+            <th>Status</th>
+            <th>Aktuelles Paket</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (comps != null)
+        {
+            @foreach (var comp in comps)
+            {
+                <tr>
+                    <td>Fach @comp.CompartmentNumber</td>
+                    <td>
+                        <span class="badge @(comp.Status == PackstationFsharp.Models.CompartmentStatus.Free ? "bg-success" : "bg-danger")">
+                            @comp.Status
+                        </span>
+                    </td>
+                    <td>@comp.CurrentParcelId</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<a asp-action="Lockers" class="btn btn-secondary">Zurück zu Packstations</a>

@@ -1,0 +1,95 @@
+﻿@{
+    ViewData["Title"] = "Paket verfolgen";
+    var parcel = ViewBag.Parcel as PackstationFsharp.Models.Parcel;
+    var locker = ViewBag.Locker as PackstationFsharp.Models.Locker;
+    var comp = ViewBag.Compartment as PackstationFsharp.Models.Compartment;
+}
+
+<h2>Paket verfolgen</h2>
+<hr />
+
+<form method="post">
+    <div class="row">
+        <div class="col-md-4">
+            <input type="text" name="trackingNumber" class="form-control" placeholder="Trackingnummer eingeben (z.B. PS...)" required />
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary">Verfolgen</button>
+        </div>
+    </div>
+</form>
+
+@if (parcel != null)
+{
+    <div class="card mt-4">
+        <div class="card-header bg-primary text-white">
+            <h4>Paketinformationen</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Trackingnummer:</strong> @parcel.TrackingNumber</p>
+                    <p><strong>Status:</strong> <span class="badge bg-success">@parcel.Status</span></p>
+                    <p><strong>Erstellt am:</strong> @parcel.CreatedAt.ToString("dd.MM.yyyy HH:mm")</p>
+                    @if (parcel.DepositedAt.HasValue)
+                    {
+                        <p><strong>Eingelegt am:</strong> @parcel.DepositedAt.Value.ToString("dd.MM.yyyy HH:mm")</p>
+                    }
+                    @if (parcel.AwaitingPickupAt.HasValue)
+                    {
+                        <p><strong>Abholbereit seit:</strong> @parcel.AwaitingPickupAt.Value.ToString("dd.MM.yyyy HH:mm")</p>
+                    }
+                    @if (parcel.PickedUpAt.HasValue)
+                    {
+                        <p><strong>Abgeholt am:</strong> @parcel.PickedUpAt.Value.ToString("dd.MM.yyyy HH:mm")</p>
+                    }
+                </div>
+                <div class="col-md-6">
+                    <h5>Empfänger</h5>
+                    <p>@parcel.RecipientFullName</p>
+                    <p>@parcel.RecipientStreet @parcel.RecipientHouseNo</p>
+                    <p>@parcel.RecipientPostalCode @parcel.RecipientCity</p>
+                    <p>@parcel.RecipientCountry</p>
+                </div>
+            </div>
+            
+            @if (parcel.ParcelImage != null)
+            {
+                <div class="mt-3">
+                    <h5>Paketbild</h5>
+                    <img src="@parcel.ParcelImage" alt="Paketbild" class="img-thumbnail" style="max-width: 300px;" />
+                </div>
+            }
+            
+            @if (parcel.Status == PackstationFsharp.Models.ParcelStatus.Deposited && locker != null && comp != null)
+            {
+                <div class="alert alert-info mt-3">
+                    <h5>ðŸ“¦ Paket ist in der Packstation</h5>
+                    <p><strong>Packstation:</strong> @locker.LockerName</p>
+                    <p><strong>Adresse:</strong> @locker.Address</p>
+                    <p><strong>Fachnummer:</strong> @comp.CompartmentNumber</p>
+                    <p>Um den Abholcode zu erhalten, bitte bestÃ¤tigen Sie den Erhalt.</p>
+                    <form asp-controller="Recipient" asp-action="ConfirmPickup" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="parcelId" value="@parcel.ParcelId" />
+                        <button type="submit" class="btn btn-success">Erhalt bestÃ¤tigen</button>
+                    </form>
+                </div>
+            }
+            
+            @if (parcel.Status == PackstationFsharp.Models.ParcelStatus.AwaitingPickup)
+            {
+                var pcode = ViewBag.PickupCode as PackstationFsharp.Models.PickupCode;
+                <div class="alert alert-warning mt-3">
+                    <p><strong>Abholcode wurde per E-Mail an den Empfänger gesendet.</strong></p>
+                    @if (pcode != null)
+                    {
+                        <p><strong>Abholcode:</strong> <span style="font-size:1.5rem; letter-spacing:0.3rem;">@pcode.Code</span></p>
+                        <p><small>Gültig bis: @pcode.ExpiresAt.ToString("dd.MM.yyyy HH:mm")</small></p>
+                    }
+                    <a asp-controller="Locker" asp-action="Open" class="btn btn-warning">Jetzt Fach Ã¶ffnen</a>
+                </div>
+            }
+        </div>
+    </div>
+}

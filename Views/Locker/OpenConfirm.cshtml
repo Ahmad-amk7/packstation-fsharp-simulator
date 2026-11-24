@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Code bestÃ¤tigt";
+    var parcel = ViewBag.Parcel as PackstationFsharp.Models.Parcel;
+    var code = ViewBag.PickupCode as PackstationFsharp.Models.PickupCode;
+}
+
+<h2>Code erfolgreich bestätigt</h2>
+<hr />
+
+<div class="alert alert-success">
+    <h4>✅ Code ist gültig</h4>
+    <p>Trackingnummer: @parcel?.TrackingNumber</p>
+    <p>EmpfÃ¤nger: @parcel?.RecipientFullName</p>
+</div>
+
+<form asp-action="Unlock" method="post">
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-success btn-lg">🔐 Fach jetzt öffnen</button>
+    <a asp-action="Open" class="btn btn-secondary">Abbrechen</a>
+</form>

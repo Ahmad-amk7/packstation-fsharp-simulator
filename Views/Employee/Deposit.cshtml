@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Paket einlegen";
+    var parcel = ViewBag.Parcel as PackstationFsharp.Models.Parcel;
+    var lockers = ViewBag.Lockers as List<PackstationFsharp.Models.Locker>;
+}
+
+<h2>Paket in Packstation einlegen</h2>
+<hr />
+
+<form method="get" asp-action="Deposit">
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <input type="text" name="trackingNumber" class="form-control" placeholder="Trackingnummer eingeben" required />
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary">Suchen</button>
+        </div>
+    </div>
+</form>
+
+@if (parcel != null)
+{
+    <div class="card mb-4">
+        <div class="card-header bg-info text-white">
+            <h5>Paket gefunden</h5>
+        </div>
+        <div class="card-body">
+            <p><strong>Trackingnummer:</strong> @parcel.TrackingNumber</p>
+            <p><strong>EmpfÃ¤nger:</strong> @parcel.RecipientFullName</p>
+            <p><strong>E-Mail:</strong> @parcel.RecipientEmail</p>
+            <p><strong>Adresse:</strong> @parcel.RecipientStreet @parcel.RecipientHouseNo, @parcel.RecipientCity</p>
+            <p><strong>Status:</strong> @parcel.Status</p>
+        </div>
+    </div>
+
+    <form method="post" asp-action="Deposit">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="trackingNumber" value="@parcel.TrackingNumber" />
+        <div class="form-group mb-3">
+            <label class="control-label">Packstation auswählen</label>
+            <select name="lockerId" class="form-control" required>
+                <option value="">-- Packstation wÃ¤hlen --</option>
+                @if (lockers != null)
+                {
+                    @foreach (var locker in lockers)
+                    {
+                        <option value="@locker.LockerId">@locker.LockerName - @locker.Address</option>
+                    }
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success">In freies Fach einlegen</button>
+        <a asp-action="Parcels" class="btn btn-secondary">Abbrechen</a>
+    </form>
+}

@@ -1,0 +1,21 @@
+﻿@model PackstationFsharp.Models.UserAccount
+@{
+    ViewData["Title"] = "Profilbild ändern";
+}
+
+<h2>Profilbild ändern</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditProfileImage" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <div class="form-group mb-3">
+                <label class="control-label">Profilbild auswählen</label>
+                <input type="file" name="profileImage" class="form-control" accept="image/*" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Hochladen</button>
+            <a asp-action="Profile" class="btn btn-secondary">Abbrechen</a>
+        </form>
+    </div>
+</div>

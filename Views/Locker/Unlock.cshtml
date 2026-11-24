@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Fach geöffnet";
+    var parcel = ViewBag.Parcel as PackstationFsharp.Models.Parcel;
+}
+
+<h2>ðŸ”“ Fach geÃ¶ffnet</h2>
+<hr />
+
+<div class="alert alert-success">
+    <h4>Fach wurde geöffnet (Simulation)</h4>
+    <p>Bitte entnehmen Sie Ihr Paket: <strong>@parcel?.TrackingNumber</strong></p>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5>Aktion erforderlich</h5>
+                <p>Haben Sie das Paket entnommen?</p>
+                
+                <form asp-action="ConfirmReceived" method="post" class="mb-2">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-success btn-lg w-100">✅ Paket entnommen - Fach schließen</button>
+                </form>
+                
+                <form asp-action="AutoClose" method="post">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-warning w-100">Fach automatisch schließen (Timeout)</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="alert alert-info mt-3">
+    <p><small>â„¹ï¸ Das Fach wird nach einiger Zeit automatisch geschlossen. Bitte klicken Sie auf "Paket entnommen", um den Vorgang abzuschlieÃŸen.</small></p>
+</div>

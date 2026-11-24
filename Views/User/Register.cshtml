@@ -1,0 +1,45 @@
+﻿@model PackstationFsharp.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Registrieren";
+}
+
+<h2>Registrieren</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Register" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group mb-3">
+                <label asp-for="UserName" class="control-label">Benutzername</label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label asp-for="UserEmail" class="control-label">E-Mail</label>
+                <input asp-for="UserEmail" class="form-control" />
+                <span asp-validation-for="UserEmail" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label asp-for="UserPassword" class="control-label">Passwort</label>
+                <input asp-for="UserPassword" type="password" class="form-control" />
+                <span asp-validation-for="UserPassword" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label asp-for="ConfirmPassword" class="control-label">Passwort bestÃ¤tigen</label>
+                <input asp-for="ConfirmPassword" type="password" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Registrieren" class="btn btn-primary" />
+                <a asp-action="Login" class="btn btn-link">Bereits registriert? Anmelden</a>
+            </div>
+        </form>
+    </div>
+</div>

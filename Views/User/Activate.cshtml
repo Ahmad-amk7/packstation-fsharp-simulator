@@ -1,0 +1,46 @@
+﻿@model PackstationFsharp.Models.ActivateViewModel
+@{
+    ViewData["Title"] = "Konto aktivieren";
+}
+
+<h2>Konto aktivieren</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Activate" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group mb-3">
+                <label asp-for="Email" class="control-label">E-Mail</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label asp-for="Code" class="control-label">Aktivierungscode</label>
+                <input asp-for="Code" class="form-control" />
+                <span asp-validation-for="Code" class="text-danger"></span>
+            </div>
+            
+            @if (TempData["DevCode"] != null)
+            {
+                <div class="alert alert-info">Entwicklungscode: @TempData["DevCode"]</div>
+            }
+            
+            <div class="form-group">
+                <input type="submit" value="Aktivieren" class="btn btn-success" />
+            </div>
+        </form>
+        
+        <hr />
+        <form asp-action="ResendCode" method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-group mb-2">
+                <input type="email" name="email" class="form-control" placeholder="E-Mail für neuen Code" required />
+            </div>
+            <button type="submit" class="btn btn-secondary">Neuen Code senden</button>
+        </form>
+    </div>
+</div>

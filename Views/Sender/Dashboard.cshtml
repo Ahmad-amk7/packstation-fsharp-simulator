@@ -1,0 +1,39 @@
+﻿@model List<PackstationFsharp.Models.Parcel>
+@{
+    ViewData["Title"] = "Absender Dashboard";
+}
+
+<h2>Absender Dashboard</h2>
+<hr />
+
+<p>
+    <a asp-action="CreateParcel" class="btn btn-primary">+ Neues Paket versenden</a>
+    <a asp-action="MyParcels" class="btn btn-secondary">Meine Pakete</a>
+</p>
+
+<h4>Letzte Pakete</h4>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Trackingnummer</th>
+            <th>Empfänger</th>
+            <th>Status</th>
+            <th>Erstellt am</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TrackingNumber</td>
+                <td>@item.RecipientFullName</td>
+                <td>
+                    <span class="badge bg-info">@item.Status</span>
+                </td>
+                <td>@item.CreatedAt.ToString("dd.MM.yyyy HH:mm")</td>
+                <td><a asp-controller="Recipient" asp-action="Track" asp-route-trackingNumber="@item.TrackingNumber" class="btn btn-sm btn-info">Verfolgen</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

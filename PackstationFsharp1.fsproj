@@ -1,0 +1,68 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>PackstationFsharp</RootNamespace>
+    <AssemblyName>PackstationFsharp</AssemblyName>
+    <LangVersion>latest</LangVersion>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <!--
+      Razor views (.cshtml) are C#-based. F# projects do not run the Razor C# source generator,
+      therefore the views are compiled at runtime by Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation
+      (same package/mechanism used by the C# version). This keeps the MVC + Razor architecture intact.
+    -->
+    <RazorCompileOnBuild>false</RazorCompileOnBuild>
+    <RazorCompileOnPublish>false</RazorCompileOnPublish>
+    <CopyRazorGenerateFilesToPublishDirectory>true</CopyRazorGenerateFilesToPublishDirectory>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <EnableDefaultRazorGenerateItems>false</EnableDefaultRazorGenerateItems>
+    <EnableDefaultRazorComponentItems>false</EnableDefaultRazorComponentItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MailKit" Version="4.18.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="10.0.14" />
+    <PackageReference Include="MySqlConnector" Version="2.6.2" />
+    <PackageReference Include="SSH.NET" Version="2026.0.0" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.14" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- F# requires an explicit, ordered compile list -->
+    <Compile Include="Models/ConnectionMode.fs" />
+    <Compile Include="Models/Enums.fs" />
+    <Compile Include="Models/UserAccount.fs" />
+    <Compile Include="Models/Parcel.fs" />
+    <Compile Include="Models/Locker.fs" />
+    <Compile Include="Models/Subscription.fs" />
+    <Compile Include="Models/EmailActivationClass.fs" />
+    <Compile Include="Models/ErrorViewModel.fs" />
+    <Compile Include="Models/AuthViewModels.fs" />
+    <Compile Include="Models/DbHelpers.fs" />
+    <Compile Include="Models/IEmailSender.fs" />
+    <Compile Include="Models/EmailSender.fs" />
+    <Compile Include="Models/DbManageConnection.fs" />
+    <Compile Include="Models/DbBuilder.fs" />
+    <Compile Include="Repositories/IUserRepository.fs" />
+    <Compile Include="Repositories/UserRepository.fs" />
+    <Compile Include="Repositories/IEmailActivationRepository.fs" />
+    <Compile Include="Repositories/EmailActivationRepository.fs" />
+    <Compile Include="Repositories/IParcelRepository.fs" />
+    <Compile Include="Repositories/ParcelRepository.fs" />
+    <Compile Include="Repositories/ILockerRepository.fs" />
+    <Compile Include="Repositories/LockerRepository.fs" />
+    <Compile Include="Controllers/HomeController.fs" />
+    <Compile Include="Controllers/UserController.fs" />
+    <Compile Include="Controllers/SenderController.fs" />
+    <Compile Include="Controllers/RecipientController.fs" />
+    <Compile Include="Controllers/EmployeeController.fs" />
+    <Compile Include="Controllers/LockerController.fs" />
+    <Compile Include="Controllers/AdminController.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views/**/*.cshtml" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

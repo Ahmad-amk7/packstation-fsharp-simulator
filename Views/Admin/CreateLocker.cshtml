@@ -1,0 +1,33 @@
+@model PackstationFsharp.Models.Locker
+@{
+    ViewData["Title"] = "Neue Packstation";
+}
+
+<h2>Neue Packstation erstellen</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="CreateLocker" method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-group mb-3">
+                <label asp-for="LockerName" class="control-label">Name der Packstation</label>
+                <input asp-for="LockerName" class="form-control" required />
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Address" class="control-label">Adresse</label>
+                <textarea asp-for="Address" class="form-control" rows="2"></textarea>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="IpAddress" class="control-label">IP-Adresse (Raspberry Pi)</label>
+                <input asp-for="IpAddress" class="form-control" placeholder="<locker-host-or-address>" />
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Port" class="control-label">Port</label>
+                <input asp-for="Port" class="form-control" value="5001" />
+            </div>
+            <button type="submit" class="btn btn-primary">Erstellen</button>
+            <a asp-action="Lockers" class="btn btn-secondary">Abbrechen</a>
+        </form>
+    </div>
+</div>

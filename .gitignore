@@ -1,0 +1,19 @@
+# .NET build and IDE output
+bin/
+obj/
+.vs/
+*.fsproj.user
+
+# Local configuration and credentials
+appsettings.*.local.json
+.env
+.env.*
+!.env.example
+
+# Uploaded user content should not be published with the source
+wwwroot/uploads/*
+!wwwroot/uploads/.gitkeep
+
+# Python cache
+__pycache__/
+*.py[cod]

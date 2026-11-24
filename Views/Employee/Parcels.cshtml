@@ -1,0 +1,49 @@
+﻿@model List<PackstationFsharp.Models.Parcel>
+@{
+    ViewData["Title"] = "Alle Pakete";
+}
+
+<h2>Alle Pakete</h2>
+<hr />
+
+<p>
+    <a asp-action="Dashboard" class="btn btn-secondary">Zurück zum Dashboard</a>
+    <a asp-action="Deposit" class="btn btn-success">Paket einlegen</a>
+</p>
+
+<table class="table table-striped table-sm">
+    <thead>
+        <tr>
+            <th>Tracking</th>
+            <th>Empfänger</th>
+            <th>E-Mail</th>
+            <th>Adresse</th>
+            <th>Status</th>
+            <th>Erstellt</th>
+            <th>Eingelegt</th>
+            <th>Abgeholt</th>
+            <th>Aktion</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><strong>@item.TrackingNumber</strong></td>
+                <td>@item.RecipientFullName</td>
+                <td>@item.RecipientEmail</td>
+                <td>@item.RecipientStreet @item.RecipientHouseNo, @item.RecipientPostalCode @item.RecipientCity</td>
+                <td><span class="badge bg-info">@item.Status</span></td>
+                <td>@item.CreatedAt.ToString("dd.MM.yy HH:mm")</td>
+                <td>@(item.DepositedAt?.ToString("dd.MM.yy HH:mm") ?? "-")</td>
+                <td>@(item.PickedUpAt?.ToString("dd.MM.yy HH:mm") ?? "-")</td>
+                <td>
+                    @if (item.Status == PackstationFsharp.Models.ParcelStatus.Created || item.Status == PackstationFsharp.Models.ParcelStatus.InTransit)
+                    {
+                        <a asp-action="Deposit" asp-route-trackingNumber="@item.TrackingNumber" class="btn btn-sm btn-success">Einlegen</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

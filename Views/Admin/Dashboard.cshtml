@@ -1,0 +1,63 @@
+﻿@model List<PackstationFsharp.Models.Parcel>
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<h2> Admin Dashboard</h2>
+<hr />
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-center bg-primary text-white">
+            <div class="card-body">
+                <h3>@ViewBag.UserCount</h3>
+                <p>Benutzer</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center bg-success text-white">
+            <div class="card-body">
+                <h3>@ViewBag.ParcelCount</h3>
+                <p>Pakete</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center bg-warning text-white">
+            <div class="card-body">
+                <h3>@ViewBag.LockerCount</h3>
+                <p>Packstations</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p>
+    <a asp-action="Users" class="btn btn-primary">Benutzer verwalten</a>
+    <a asp-action="Lockers" class="btn btn-success">Packstations verwalten</a>
+    <a asp-action="CreateLocker" class="btn btn-info">Neue Packstation</a>
+</p>
+
+<h4>Letzte Pakete</h4>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Tracking</th>
+            <th>Empfänger</th>
+            <th>Status</th>
+            <th>Erstellt</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TrackingNumber</td>
+                <td>@item.RecipientFullName</td>
+                <td>@item.Status</td>
+                <td>@item.CreatedAt.ToString("dd.MM.yyyy HH:mm")</td>
+            </tr>
+        }
+    </tbody>
+</table>

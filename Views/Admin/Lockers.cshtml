@@ -1,0 +1,42 @@
+﻿@model List<PackstationFsharp.Models.Locker>
+@{
+    ViewData["Title"] = "Packstations verwalten";
+}
+
+<h2>Packstations verwalten</h2>
+<hr />
+
+<p>
+    <a asp-action="CreateLocker" class="btn btn-primary">+ Neue Packstation</a>
+    <a asp-action="Dashboard" class="btn btn-secondary">Zurück</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Adresse</th>
+            <th>IP-Adresse</th>
+            <th>Port</th>
+            <th>Status</th>
+            <th>Simulation</th>
+            <th>Aktion</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.LockerName</td>
+                <td>@item.Address</td>
+                <td>@item.IpAddress</td>
+                <td>@item.Port</td>
+                <td>@item.Status</td>
+                <td>@(item.UseSimulation ? "Ja" : "Nein")</td>
+                <td>
+                    <a asp-action="LockerDetails" asp-route-id="@item.LockerId" class="btn btn-sm btn-info">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

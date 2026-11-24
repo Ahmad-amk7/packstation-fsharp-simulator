@@ -1,0 +1,34 @@
+﻿@model PackstationFsharp.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Anmelden";
+}
+
+<h2>Anmelden</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Login" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group mb-3">
+                <label asp-for="Email" class="control-label">E-Mail</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label asp-for="Password" class="control-label">Passwort</label>
+                <input asp-for="Password" type="password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Anmelden" class="btn btn-primary" />
+                <a asp-action="Register" class="btn btn-link">Registrieren</a>
+                <a asp-action="Activate" class="btn btn-link">Konto aktivieren</a>
+            </div>
+        </form>
+    </div>
+</div>
